@@ -3,6 +3,7 @@ package com.example.worksafewatch;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -16,14 +17,13 @@ import java.util.List;
 public class MachinistActivity extends Activity {
 
     private Spinner spinnerMachinaryIDs;
-    private ArrayList<String> machinaryDevices;
+    private final List<String>  machinaryDevices  = new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_machinist);
 
-        //BottomAppBar bar = findViewById(R.id.bottomAppBar);
         Button start_button = findViewById(R.id.OkButton);
 
         //======================================================================================
@@ -46,6 +46,16 @@ public class MachinistActivity extends Activity {
                 }
                 // Definisco lo spinner e le sue proprietà
                 spinnerMachinaryIDs = (Spinner)findViewById(R.id.spinner);
+                spinnerMachinaryIDs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE); /* if you want your item to be white */
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
                 //Creating the ArrayAdapter instance having the country list
                 ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_spinner_item,machinaryDevices);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

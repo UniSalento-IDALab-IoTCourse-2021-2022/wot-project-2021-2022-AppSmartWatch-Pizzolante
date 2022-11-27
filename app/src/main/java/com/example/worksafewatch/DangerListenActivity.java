@@ -183,7 +183,7 @@ public class DangerListenActivity extends Activity {
 
     // Metodo che serve per inviare una notifica con un messaggio
     private void notifyRiskMachinist(String message) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("DEVICE_FOUND", "Channel1", importance);
             // Register the channel with the system; you can't change the importance
@@ -196,8 +196,7 @@ public class DangerListenActivity extends Activity {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "DEVICE_FOUND")
                 .setContentTitle("Pericolo!")
                 .setContentText(message)
-                .setPriority(2)
-                .setVibrate(new long[]{1000, 1000});
+                .setPriority(2);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, builder.build());

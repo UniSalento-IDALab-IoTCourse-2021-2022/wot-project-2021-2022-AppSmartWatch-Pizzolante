@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpController {
     private static RetrofitInterface retrofitInterface;
     private static Retrofit retrofit;
-    private static String BASE_URL = "http://192.168.43.237:3000";
+    private static String BASE_URL = "http://192.168.1.5:3000";
 
     public static void start(){
         // Creo l'oggetto Retrofit con il base url e il convertitore JSON

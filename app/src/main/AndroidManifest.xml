@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.worksafewatch">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.type.watch"/>
 
     <application
@@ -11,11 +15,11 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
+            android:usesCleartextTraffic="true"
             android:theme="@android:style/Theme.DeviceDefault">
-        <uses-library
-                android:name="com.google.android.wearable"
-                android:required="true"/>
 
+        <service android:name="org.eclipse.paho.android.service.MqttService" >
+        </service>
 
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
@@ -41,7 +45,6 @@
                 android:exported="true">
 
         </activity>
-
 
 
         <activity
