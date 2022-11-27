@@ -1,9 +1,12 @@
 package com.example.worksafewatch;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -183,23 +186,25 @@ public class DangerListenActivity extends Activity {
 
     // Metodo che serve per inviare una notifica con un messaggio
     private void notifyRiskMachinist(String message) {
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("DEVICE_FOUND", "Channel1", importance);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+        Notification.Builder b = new Notification.Builder(this);
+
+        //FIX android O bug Notification add setChannelId("shipnow-message")
+        NotificationChannel mChannel = null;
+        b.setSmallIcon(R.drawable.worker_worker_icon_with_png_and_vector_format_for_free_481601) // vector (doesn't work with png as well)
+                .setContentText("Pericolo!\nUn worker è vicino al tuo macchinario!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mChannel = new NotificationChannel("1", "WorkSafe",NotificationManager.IMPORTANCE_HIGH);
+            b.setChannelId("1");
         }
 
-        // Create the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "DEVICE_FOUND")
-                .setContentTitle("Pericolo!")
-                .setContentText(message)
-                .setPriority(2);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        notificationManager.notify(1, b.build());
     }
 
 }
